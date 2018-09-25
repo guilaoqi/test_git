@@ -52,11 +52,41 @@ commit 75d4d9e0d1ba4d4858415d1037ac268838f5b761 (HEAD -> master)
 Author: guilaoqi <593448764@qq.com>
 Date:   Tue Sep 25 16:15:19 2018 +0800
 
-> git log --online   //查看简洁版日志
+> git log --oneline   //查看简洁版日志
+>
+> 77dc461 (HEAD -> master) 直接一次性提交所有文件2
+> 75d4d9e 直接一次性提交所有文件
+> 41f2df5 我添加了一个md“
+
+`git reflog`
+
+版本切换记录,可以看到所有提交的版本号
 
 ## 版本回退
 
 > git reset --hard  Head~0 //回退当前(最近一次提交的)
 >
 > git reset --hard  Head~1 //回退上一个
+>
+> git reset --hard  75d4d9e // (写上--oneline下显示的commi符也可以退回到对应的版本)
+
+## 分支
+
+创建dev分支：
+
+> git branch dev
+
+进入分支：
+
+> git checkout dev
+
+合并分支（自动合并）
+
+> git merge dev
+
+查看当前有哪些分支
+
+> git branch
+
+## 合并分支代码遇到冲突时，手动处理
 
