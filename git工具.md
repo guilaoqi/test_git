@@ -100,3 +100,9 @@ Date:   Tue Sep 25 16:15:19 2018 +0800
 
 head表示当前最新提交，遇到冲突自己手动更改去提交；
 
+### github（当做git服务器来用）
+
+在github上新建一个仓库，然后记下仓库的https地址；
+
+> git push https://github.com/guilaoqi/test_git.git
+
