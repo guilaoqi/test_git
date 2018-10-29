@@ -537,6 +537,8 @@ webjars形式引入https://www.webjars.org/；
 
 SpringBoot推荐的Thymeleaf；
 
+1、引入thymeleaf；
+
 ```
 <dependency>
   <groupId>org.thymeleaf</groupId>
@@ -545,19 +547,91 @@ SpringBoot推荐的Thymeleaf；
 </dependency>
 ```
 
+在spring-boot-autoconfigure里面有自动配置规则：
+
 ```
-@ConfigurationProperties(prefix = "spring.thymeleaf")
+@ConfigurationProperties(
+    prefix = "spring.thymeleaf"
+)
 public class ThymeleafProperties {
-
-	private static final Charset DEFAULT_ENCODING = Charset.forName("UTF-8");
-
-	private static final MimeType DEFAULT_CONTENT_TYPE = MimeType.valueOf("text/html");
-
-	public static final String DEFAULT_PREFIX = "classpath:/templates/";
-
-	public static final String DEFAULT_SUFFIX = ".html";
-  	//
+    private static final Charset DEFAULT_ENCODING;
+    public static final String DEFAULT_PREFIX = "classpath:/templates/";  //默认前置
+    public static final String DEFAULT_SUFFIX = ".html";   //默认后缀
+    private boolean checkTemplate = true;
+    private boolean checkTemplateLocation = true;
+    private String prefix = "classpath:/templates/";
+    private String suffix = ".html";
+    private String mode = "HTML";
 ```
 
 只要我们把HTML页面放在classpath:/templates/，thymeleaf就能自动渲染；
+
+```
+Simple expressions:
+    Variable Expressions: ${...}
+    Selection Variable Expressions: *{...}
+    Message Expressions: #{...}
+    Link URL Expressions: @{...}
+    Fragment Expressions: ~{...}
+Literals
+Text liter
+```
+
+1.导入命名空间
+
+```
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+```
+
+2.配置路由，传进去参数
+
+```
+    @RequestMapping("/success")
+    public String success(Map<String,Object> map) {
+        map.put("hello","你好");
+        map.put("users",Arrays.asList("zhangsan","lisi","wangwu"));
+        return "success";
+    }
+```
+
+3.html中
+
+```
+<body>
+    <h1>成功！</h1>
+    <div th:text="${hello}"></div>
+
+    <h4 th:text="${user}" th:each="user:${users}"></h4>
+</body>
+```
+
+
+
+
+
+### 请求拦截
+
+```
+@RequestMapping(value="/user/login",method=RquestMethod.POST)
+@PostMapping(value="/user/login")
+public String login(@RequestParam("username") String username,
+					@RequestParam("password") String password){
+                        if(!StringUtils.isEmpty(username)&&"123456".equals(password)){
+                        	//登陆成功
+                            return "dashborad"
+                        }else{
+                        	//登录失败
+                            return "login"
+                        }
+					}
+
+
+@PutMapping
+@GetMapping
+
+```
+
+### SpringData
+
+JDBC MyBatis SpringData JPA
 
